@@ -5,7 +5,7 @@ import re
 import cPickle
 
 
-FILENAME = "point_files/points_plane.txt"
+FILENAME = "../input_files/points_plane.txt"
 
 
 def main():
@@ -13,11 +13,13 @@ def main():
 	# notation -> (type (vertices, edges, face))_(file_name).save 
 					# -> pickled file for the type of file_name 
 
-	core_file_name = re.match('.+/(.+).txt', FILENAME).group(1)
-	file_name_vertices = 'structs/' + core_file_name + '_vertices.save'
-	file_name_edges = 'structs/' + core_file_name + '_edges.save'
-	file_name_faces = 'structs/' + core_file_name + '_faces.save'
+	core_file_name = re.match('.+/.+/(.+).txt', FILENAME).group(1)
+	file_name_vertices = 'cpickle/' + core_file_name + '_vertices.save'
+	file_name_edges = 'cpickle/' + core_file_name + '_edges.save'
+	file_name_faces = 'cpickle/' + core_file_name + '_faces.save'
 
+
+	print file_name_vertices
 
 	# defining empty lists for the vertices, edges, and faces
 	vertices = []

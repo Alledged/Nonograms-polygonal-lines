@@ -1,5 +1,15 @@
 # this script creates a dcel using an input file passed as argument
 
+# need to bookkeep regarding the paths to import from the libraries
+# folder 
+# (code from "http://stackoverflow.com/questions/714063/python-importing-modules-from-parent-folder")
+
+#import os, sys, inspect
+
+# -------------------
+import manage_libraries_imports
+# -------------------
+
 import DCEL
 import Point
 import Rational
