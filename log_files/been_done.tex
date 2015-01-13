@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+
+\title{Nonograms, Steps}
+\author{Raphaël Parment}
+
+\begin{document}
+\maketitle
+
+\section{Polygonal lines approximation}
+\subsection{Intro and Bookkeeping}
+The picture hidden in the Nonogram is that of a top view of an airplane (similar to a pictogram). I am only using polygonal lines, thus avoiding any non linear geometry (only straight lines). The input file is \url{point_files/points_plane.txt}. The input file is formated, such that each line represents four points, the first two being the $x$ and $y$ coordinates of the starting point of the line and the last two being the coordinates of the ending point of the line. Each line of text in the input file represents an actual geometric line between two points. These are the coordinates for the air plane model: \\
+
+\begin{tabular}{c|c|c|c}
+$x_1$ & $y_1$ & $x_2$ & $y_2$\\ 
+\hline
+0 & 70 & -10 & 50\\
+-10 & 50 & -10 & 20\\
+-10 & 20 & -50 & 0\\
+-50 & 0 & -50 & -20\\
+-50 & -20 & -10 & -10\\
+-10 & -10 & -10 & -30\\
+-10 & -30 & -20 & -40\\
+-20 & -40 & 20 & -40\\
+20 & -40 & 10 & -30\\
+10 & -30 & 10 & -10\\
+10 & -10 & 50 & -20\\
+50 & -20 & 50 & 0\\
+50 & 0 & 10 & 20\\
+10 & 20 & 10 & 50\\
+10 & 50 & 0 & 70\\
+\end{tabular}
+\newline
+
+\subsection{Code}
+\subsubsection{DCEL business}
+\label{DCEL_business}
+The code is located at \url{C:/Users/Raphael/Documents/_Master/Thesis/notes/libraries}, which is thought of as the root directory for all code. I am using a free DCEL Python implementation found at: \url{http://euler.slu.edu/~goldwasser/493/assignments/hw02/files}. It consists of 10 files:
+\begin{itemize}
+\item Point.py\\ 
+used to represent a 2D or 3D point
+\item Rational.py\\
+class used to create Points
+\item DCEL.py\\
+main module, with Vertex, Edge, Face, DCEL (those are the 4 main) classes
+\item geomutil.py\\
+module with geometric procedures implemented
+\item intersections.py\\
+module to check line intersections
+\item BinarySearchTree.py
+\item cs1graphics.py
+\item driver.py
+\item RedBlackTree.py
+\item triangulate.py\\
+this module is not used!\\
+\end{itemize}
+
+
+In order to create a DCEL object for a non simple polygon, I call the function \emph{buildGeneralSubdivision} located in the intersection module. If the polygon is simple, I call \emph{BuildSimplePolygon} from the DCEL module. The returned object is a DCEL object taking care of all vertices, edges and faces. I added a couple of method to the DCEL class in the DCEL module: {\bf plot\_whole\_dcel}, to the Face class: {\bf walk\_along} to walk along a face, {\bf get\_area} to compute the area of a face, {\bf plot\_face} to plot a face, {\bf get\_ordered\_vertices} to return an ordered set of the vertices bounding a face.
+
+\subsubsection{Extension of lines}
+The drawing of the air plane is surrounded by a bounding box of length $x$ pixels. In order to have somewhat of a complete Nonogram, I extended all the lines from the original drawing to the bounding box. Therefore we end up with a set of lines within which the original plane lies, however it is not easily recognisable. The extension of each line was done in the script \url{intersections_experiments.py}. 
+
+\subsubsection{cPickle}
+Using the DCEL and related modules\footnote{described in section~\ref{DCEL_business}} we can create a doubly connected edge list for a set of edges, each described as a four coordinates in the input file. To speed up our computation, we do not want to re-build the DCEL everytime the script is run, therefore we need to save the created instance of the DCEL class. To do that we use the cPickle module. Due to high recursivity of the DCEL instance, we may not (did not work with Pickle, maybe try again with cPickle) \emph{pickle} (save) it as a whole. However we truly only need the Vertices, Edges and Faces and the appropriate methods defined in those classes. We can pickle these parts of the instance, to be \emph{unpickled} loaded in later scripts to heavily fasten running times. Here is the pickling and unpickling procedure:\\ 
+
+
+{\bf pickling}
+\begin{verbatim}
+import cPickle
+
+# create a file
+f_description = file(path_for_saving, 'wb')
+
+# dumping the object into the file
+cPickle.dump(object, f_description, protocol = cPickle.HIGHEST_PROTOCOL)
+
+#close file
+f_description.close()
+\end{verbatim}
+
+
+{\bf unpickling}
+\begin{verbatim}
+import cPickle
+
+# fetch appropriate file
+f_description = file(path_to_file, 'rb')
+
+# unpickling/ loading
+object_name = cPickle.load(f_description)
+
+# close file
+f_description.close()
+\end{verbatim}
+
+
+In our main script we therefore want to firstly check if the three files (vertices.save, edges.save, faces.save) exists. If not, run the DCEL generating script and pickle the three objects. If they do exist, read the .save files and load the object into the current script.\\
+
+Now we have two different script: \url{dcel_creation.py} used to create a dcel from the input file and then pickle the vertices, edges and faces into \url{structs/core_input_file_name_(vertices/edges/faces).save}. The second script is \url{nonograms_polygonal_lines.py}. It is the main program, in which we import \url{dcel_creation.py} and we unpickle (if needed) the pickle files: \url{structs/core_input_file_name_(vertices/edges/faces).save}.
+
+\subsection{GitHub}
+
+\end{document}
