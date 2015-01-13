@@ -3,6 +3,7 @@ import dcel_creation
 import os
 import re
 import cPickle
+import intersections_experiments as ie
 
 
 
@@ -75,13 +76,12 @@ def main():
 		f_f.close()
 
 
+		e = ie.parse_file(FILENAME)
+
+
+
 	# should have access to vertices, edges and faces
 	
-
-	for face in faces:
-		if(face.get_ordered_vertices() != None):
-			for vertex in face.get_ordered_vertices():
-				print vertex
 
 
 if __name__ == '__main__':

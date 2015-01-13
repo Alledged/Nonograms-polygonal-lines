@@ -4,9 +4,10 @@ import DCEL
 import Point
 import Rational
 
+
 def parse_file(file_name):
-	"""returns a list of 2D tuples of Point.Point, each representing
-	a edge"""
+	"""Returns a list of 2D tuples of Point.Point, each representing
+	a edge, the file MUST be in the format "{0} {1} {2} {3}" """
 	edges = []
 	for line in file(file_name):
 		data = line.split()
@@ -24,7 +25,7 @@ def parse_file(file_name):
 		# to variable "edges" which must be returned		
 		edges.append((Point.Point(data[0], data[1]),
 			Point.Point(data[2], data[3])))
-
+		
 	return edges
 
 def create_dcel(edges, pts=[]):
