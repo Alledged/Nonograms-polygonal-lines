@@ -1,0 +1,6 @@
+TODO
+----
+
+	-> Need to find out how to draw edges which are not part any face,
+	-> Need to figure out how to know when a face is part of the
+		original drawing or not!!!

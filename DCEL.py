@@ -299,18 +299,6 @@ class Face:
         return total
 
     # my method
-    def walk_along(self):
-        """walk along the boundary of the self.face"""
-        current_edge = self.getOuterComponent()
-        if (current_edge):
-            starting_edge = current_edge
-            while current_edge.getDest() != starting_edge.getOrigin():
-                print current_edge
-                current_edge = current_edge.getNext()
-            else:
-                print current_edge
-
-    # my method
     def get_ordered_vertices(self):
         """returns the an ordered list of the vertices bounding the edge"""
         current_edge = self.getOuterComponent()

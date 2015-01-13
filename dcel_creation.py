@@ -31,3 +31,4 @@ def parse_file(file_name):
 def create_dcel(edges, pts=[]):
 	dcel = DCEL.buildGeneralSubdivision(edges, pts)
 	return dcel
+

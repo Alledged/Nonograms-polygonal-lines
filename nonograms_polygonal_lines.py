@@ -4,11 +4,23 @@ import os
 import re
 import cPickle
 import intersections_experiments as ie
+import matplotlib.pyplot as plt
 
 
 
-FILENAME = "input_files/points_plane.txt"
+FILENAME = "input_files/page59.txt"
 
+
+def plot_whole_structure(faces):
+	"""This function plots all the faces from the faces only"""
+	#print len(edges)
+	for face in faces:
+		lst = face.get_ordered_vertices()
+		if(lst != None):
+			plt.plot(lst[0], lst[1]) # colour if needed
+	plt.show()
+
+	
 
 def main():
 	# check if the dcel parts exits
@@ -76,9 +88,10 @@ def main():
 		f_f.close()
 
 
-		e = ie.parse_file(FILENAME)
 
+	plot_whole_structure(faces)
 
+	
 
 	# should have access to vertices, edges and faces
 	

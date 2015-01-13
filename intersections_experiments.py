@@ -33,7 +33,7 @@ bbox_y_right = ()
 
 
 
-def parse_file(file_name):
+def parse_file_and_bounding_box(file_name):
 	""" Parse the coordinates file. Works with ints and Rationals. 
 	
 	It returns a list of edges, where one edge is defined by one line
