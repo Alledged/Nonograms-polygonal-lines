@@ -2,9 +2,10 @@
 import geomutil
 import Point
 import DCEL
+import Rational
+
 import matplotlib.pyplot as plt
 import types
-import Rational
 import re
 from sys import maxint
 import cPickle
@@ -12,7 +13,7 @@ import cPickle
 
 
 # file from which the points are read, format -> x_1 y_1 x_2 y_2
-FILENAME = "point_files/points_plane_extended.txt"
+FILENAME = "input_files/points_plane.txt"
 
 # buffer # of pixels to add to create the bounding box
 SIDE = 100
@@ -183,20 +184,24 @@ def main():
 	# would need a way to save this data structure: ASK PROFESSOR OR D
 	# using pickle or so!!
 	
-	dcel_extended = DCEL.buildGeneralSubdivision(e, [])
+	dcel_ = DCEL.buildGeneralSubdivision(e, [])
 
+
+
+	print dcel_.getVertices()
 	# we want the vertices, edges and faces.
-	f_vertices = file('structs/vertices.save', 'wb')
-	cPickle.dump(dcel_extended.getVertices(), f_vertices, protocol = cPickle.HIGHEST_PROTOCOL)
-	f_vertices.close()
+	
+	#f_vertices = file('structs/vertices.save', 'wb')
+	#cPickle.dump(dcel_extended.getVertices(), f_vertices, protocol = cPickle.HIGHEST_PROTOCOL)
+	#f_vertices.close()
 
-	f_edges = file('structs/edges.save', 'wb')
-	cPickle.dump(dcel_extended.getEdges(), f_edges, protocol=cPickle.HIGHEST_PROTOCOL)
-	f_edges.close()
+	#f_edges = file('structs/edges.save', 'wb')
+	#cPickle.dump(dcel_extended.getEdges(), f_edges, protocol=cPickle.HIGHEST_PROTOCOL)
+	#f_edges.close()
 
-	f_faces = file('structs/faces.save', 'wb')
-	cPickle.dump(dcel_extended.getFaces(), f_faces, protocol=cPickle.HIGHEST_PROTOCOL)
-	f_faces.close()
+	#f_faces = file('structs/faces.save', 'wb')
+	#cPickle.dump(dcel_extended.getFaces(), f_faces, protocol=cPickle.HIGHEST_PROTOCOL)
+	#f_faces.close()
 
 
 	#
