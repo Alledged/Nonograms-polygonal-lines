@@ -11,13 +11,15 @@ import matplotlib.pyplot as plt
 FILENAME = "input_files/page59.txt"
 
 
-def plot_whole_structure(faces):
+def plot_whole_structure(edges):
 	"""This function plots all the faces from the faces only"""
 	#print len(edges)
-	for face in faces:
-		lst = face.get_ordered_vertices()
-		if(lst != None):
-			plt.plot(lst[0], lst[1]) # colour if needed
+	for edge in edges:
+		#lst = face.get_ordered_vertices()
+		#if(lst != None):
+		plt.plot(
+			[edge.getOrigin().getCoords()[0], edge.getDest().getCoords()[0]],
+			[edge.getOrigin().getCoords()[1], edge.getDest().getCoords()[1]]) # colour if needed
 	plt.show()
 
 	
@@ -89,7 +91,7 @@ def main():
 
 
 
-	plot_whole_structure(faces)
+	plot_whole_structure(edges)
 
 	
 
