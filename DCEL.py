@@ -421,24 +421,25 @@ class DCEL:
         return result
 
     def getEdges(self):
-        """Return a set of all edges."""
+        """Return a set/list of all edges."""
         edges = set()
         for f in self.getFaces():
             edges.update(f.getOuterBoundary())
             for inner in f.getInnerComponents():
                 edges.update(inner.getFaceBoundary())
-       
-        return edges
+       # adding list() to return a list
+        return list(edges)
 
     def getVertices(self):
-        """Return a set of all vertices."""
+        """Return a set/list of all vertices."""
         verts = set()
         for f in self.getFaces():
             verts.update(f.getIsolatedVertices())
             verts.update([e.getOrigin() for e in f.getOuterBoundary()])
             for inner in f.getInnerComponents():
                 verts.update([e.getOrigin() for e in inner.getFaceBoundary()])
-        return verts
+        # adding list() to return a list
+        return list(verts)
 
     def rebuildFaces(self, allEdges, isolatedVertices=[]):
         """Reconstructs the implicit face complexes for the underlying edges.

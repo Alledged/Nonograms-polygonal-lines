@@ -6,6 +6,23 @@ def intersection(a, b, c, d):
     """Compute point at which line defined by points a and b intersects line defined by c and d."""
     # define p parametrically as a*t - b*(1-t) and
     # then solve for t based on ratio of vectors cp and cd.
+    
+    # if statement checking the type of a, b, c, d and converting if necessary
+    if(not isinstance(a, Point.Point)):
+        # a is a vertex
+        #print "convert a to Point"
+        a = Point.Point((a.getCoords()[0], a.getCoords()[1]))
+
+    if(not isinstance(b, Point.Point)):
+        # b is a vertex
+        #print "convert b to Point"
+        b = Point.Point((b.getCoords()[0], b.getCoords()[1]))
+
+
+    #print "is a instance of Point: ", isinstance(a, Point.Point)
+    #print "is b instance of Point: ", isinstance(b, Point.Point)
+    
+
     t = Rational.Rational( (c[1]-b[1])*(c[0]-d[0]) + (b[0]-c[0])*(c[1]-d[1]),
                            (b[0]-a[0])*(c[1]-d[1]) + (a[1]-b[1])*(c[0]-d[0]) )
         

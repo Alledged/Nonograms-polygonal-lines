@@ -3,3 +3,11 @@ TODO
 
 	-> Need to figure out how to know when a face is part of the
 		original drawing or not!!!
+	-> Figure out what input format to use (set of loops, to consider holes) or svg files?
+	-> Formal definition of the problem: What is a nonograms, what makes a good nonogram
+		puzzle?
+			definition of nonogram
+			specifications:
+	-> for the tangram_cat, make sure lines have only 4 possible orientations: 
+			up, down, diagonal (slope + 45 degrees), diagonal (slope - 45 degrees)
+	

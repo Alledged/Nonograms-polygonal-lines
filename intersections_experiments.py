@@ -111,10 +111,13 @@ def legit_intersections(edge):
 	# using the geomuil module, find the intersection point for each line with the 
 	# four edges of the bounding box. Some of those may be undefined if the edge and 
 	# that of the bounding box are parallel!, assign then the value None.
-	inters_x_t = geomutil.intersection(edge[0], edge[1], bbox_x_top[0], bbox_x_top[1])
-	inters_x_b = geomutil.intersection(edge[0], edge[1], bbox_x_bot[0], bbox_x_bot[1])
-	inters_y_l = geomutil.intersection(edge[0], edge[1], bbox_y_left[0], bbox_y_left[1])
-	inters_y_r = geomutil.intersection(edge[0], edge[1], bbox_y_right[0], bbox_y_right[1])	
+	
+	
+
+	inters_x_t = geomutil.intersection(edge.getOrigin(), edge.getDest(), bbox_x_top[0], bbox_x_top[1])
+	inters_x_b = geomutil.intersection(edge.getOrigin(), edge.getDest(), bbox_x_bot[0], bbox_x_bot[1])
+	inters_y_l = geomutil.intersection(edge.getOrigin(), edge.getDest(), bbox_y_left[0], bbox_y_left[1])
+	inters_y_r = geomutil.intersection(edge.getOrigin(), edge.getDest(), bbox_y_right[0], bbox_y_right[1])	
 
 	# counter of legitimate intersection used to take care of the corner intersection 
 	# degeneracy
