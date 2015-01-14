@@ -249,8 +249,8 @@ def main():
 
 
 
-	plot_extended_edges(edges, bbox_x_top, bbox_x_bot, bbox_y_left, bbox_y_right)
-	#plot_whole_structure(edges)
+	#plot_extended_edges(edges, bbox_x_top, bbox_x_bot, bbox_y_left, bbox_y_right)
+	plot_whole_structure(edges)
 
 
 	# should have access to vertices, edges and faces
