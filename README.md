@@ -39,6 +39,7 @@ The following cpickle files:
 The following log files (tex)
 
 	been_done.tex
+	formal_definition.tex
 
 I added a TODO file with 'clear' goals
 	
