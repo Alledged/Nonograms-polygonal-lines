@@ -1,0 +1,5 @@
+TODO_holes.txt
+--------------
+
+
+find a way to incorporate the current dcel implementation with the depth level, so that the user knows and can visualise which face belongs to the picture and which do not. Maybe use a visual library to draw the faces and colour them up, maybe using svg files????
