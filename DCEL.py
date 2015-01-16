@@ -196,12 +196,15 @@ class Edge:
 
 class Face:
     """Represents a face of the subdivision."""
-    def __init__(self, auxData=None):
+    def __init__(self, part_of_drawing=None):
+        # changed auxData to part_of_drawing ( a boolean variable )
         """Create face structure.
 
         auxData can be anything (default None)
         """
-        self._data = auxData
+
+        # use auxData as boolean to check if part of the main drawing
+        self._part_of_drawing = part_of_drawing
         self._outer = None
         self._inner = set()
         self._isolated = set()
@@ -210,13 +213,19 @@ class Face:
         """Allow face to serve as key of set or dictionary."""
         return hash(id(self))
 
-    def getData(self):
-        """Returns auxillary data."""
-        return self._data
+    #def getData(self):
+    #    """Returns auxillary data."""
+    #    return self._data
 
-    def setData(self, auxData):
-        """Sets auxillary data."""
-        self._data = auxData
+    #def setData(self, auxData):
+    #    """Sets auxillary data."""
+    #    self._data = auxData
+
+    def get_is_part_of_drawing(self):
+        return self._part_of_drawing
+
+    def set_is_part_of_drawing(self, value):
+        self._part_of_drawing = value
 
     def getOuterComponent(self):
         """Returns an edge of the outer boundary (or else None)."""
@@ -583,11 +592,11 @@ class DCEL:
         #plt.plot(BOUNDING_X, BOUNDING_Y)
         #plt.axis([-250, 250, -250, 250])
 
-        faces = self.getFaces()
-        for face in faces:
-            lst = face.get_ordered_vertices()
-            if(lst != None):
-                plt.plot(lst[0], lst[1]) # colour for each face may be changed
+        edges = self.getEdges()
+        plt.axis([0, 15, 0, 15])
+        for edge in edges:
+            plt.plot([edge.getOrigin().getCoords()[0], edge.getDest().getCoords()[0]], 
+            [edge.getOrigin().getCoords()[1], edge.getDest().getCoords()[1]]) # colour for each face may be changed
         plt.show()
 
 def buildSimplePolygon(points):

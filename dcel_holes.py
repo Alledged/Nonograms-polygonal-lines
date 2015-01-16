@@ -11,23 +11,17 @@ def get_data():
 
 	all_loops = []
 
-	f = file("input_files/holes.txt", "r")
-	current_loop = -1
+	f = file("input_files/separated_faces.txt", "r")
 	for line in f:
 		data = line.split()
-		# new loop starting
-		if len(data) == 1:
-			current_loop += 1
-			# initialise a new list
-			all_loops.append([])
-		else:
-			p = Point.Point(int(data[0]), int(data[1]))
-			all_loops[current_loop].append(p)
+
+		e = (Point.Point(int(data[0]), int(data[1])), Point.Point(int(data[2]), int(data[3]))) 
+		all_loops.append(e)
 
 	return all_loops
 
 
-loops = get_data()
+
 
 # flatten the list.
 #print [item for sublist in loops for item in sublist]
@@ -50,9 +44,34 @@ def convert_to_edges(all_loops):
 	return all_edges
 
 # list of list of edges.
-all_edges = convert_to_edges(loops)
+#all_edges = convert_to_edges(loops)
 
 # flatten the list to try
-all_edges = [item for sublist in all_edges for item in sublist]
+#all_edges = [item for sublist in all_edges for item in sublist]
+dcel = DCEL.buildGeneralSubdivision(get_data())
 
-dcel = DCEL.buildGeneralSubdivision(all_edges)
+
+# recursive function!
+def part_of_drawing(face, value):
+	face.set_is_part_of_drawing(value)
+	#print face.getOuterBoundary()
+	#print "\n"
+	#print "assigned once"
+	if value == True:
+		value = False
+	else:
+		value = True
+
+	for inner_face_edge in face.getInnerComponents():
+		if(inner_face_edge != []):
+			part_of_drawing(inner_face_edge.getTwin().getFace(), value)
+		
+		
+
+val = False
+part_of_drawing(dcel.getFaces()[0], val)
+
+for face in dcel.getFaces():
+	print face.getOuterBoundary()
+	print face.get_is_part_of_drawing()
+	print "\n"
