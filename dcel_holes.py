@@ -1,62 +1,44 @@
-# this script read holes.txt and creates a dcel to investigate how
-# holes behave
+# This script read an input file in format {0} {1} {2} {3} and 
+# creates a DCEL from it, and assigns to each face whether it
+# is part of the original drawing. The entire DCEL can then be
+# drawn to a svg file.
 import DCEL
 import Point
+import draw_dcel
+
+FILENAME = "input_files/separated_faces10.txt"
+OUTPUT_FILE = "output.svg"
+
+def main():
+	edges = parse_file(FILENAME)
+	dcel = DCEL.buildGeneralSubdivision(edges)
+	part_of_drawing(dcel.getFaces()[0], False)
+
+	# draw the DCEL to svg file
+	draw_dcel.draw(dcel.getFaces(), OUTPUT_FILE)
 
 
+def parse_file(filename):
+	"""reads the data from holes.txt and returns it as a list of 
+	edges, which are 2D tuples of Point.Point instances"""
+	edges = []
+	try:
+		f = file(filename, 'r')
+		for line in f:
+			data = line.split()
+			e = (Point.Point(int(data[0]), int(data[1])), Point.Point(int(data[2]), int(data[3]))) 
+			edges.append(e)
 
-def get_data():
-	"""reads the data from holes.txt and returns it as a list of list
-	of Points.Points (coordinates)"""
-
-	all_loops = []
-
-	f = file("input_files/separated_faces.txt", "r")
-	for line in f:
-		data = line.split()
-
-		e = (Point.Point(int(data[0]), int(data[1])), Point.Point(int(data[2]), int(data[3]))) 
-		all_loops.append(e)
-
-	return all_loops
-
-
-
-
-# flatten the list.
-#print [item for sublist in loops for item in sublist]
-
-def convert_to_edges(all_loops):
-	"""returns a set of edges for all three loops"""
-	all_edges = []
-	counter_loop = -1
-	for loop in all_loops:
-		all_edges.append([])
-		counter_loop += 1
-		for i in range(len(loop)):
-			edge = ()
-			if i == len(loop) - 1 :
-				# last edge, between last point and first point
-				edge += (loop[i], loop[0])
-			else:
-				edge += (loop[i], loop[i+1])
-			all_edges[counter_loop].append(edge)
-	return all_edges
-
-# list of list of edges.
-#all_edges = convert_to_edges(loops)
-
-# flatten the list to try
-#all_edges = [item for sublist in all_edges for item in sublist]
-dcel = DCEL.buildGeneralSubdivision(get_data())
+	except IndexError:
+		print "ERROR!!!, file should have 4 columns"		
+	return edges
 
 
 # recursive function!
 def part_of_drawing(face, value):
+	"""Sets the variable is_part_of_drawing to each face depending 
+	on whether the face is part of the original drawing"""
 	face.set_is_part_of_drawing(value)
-	#print face.getOuterBoundary()
-	#print "\n"
-	#print "assigned once"
 	if value == True:
 		value = False
 	else:
@@ -67,11 +49,5 @@ def part_of_drawing(face, value):
 			part_of_drawing(inner_face_edge.getTwin().getFace(), value)
 		
 		
-
-val = False
-part_of_drawing(dcel.getFaces()[0], val)
-
-for face in dcel.getFaces():
-	print face.getOuterBoundary()
-	print face.get_is_part_of_drawing()
-	print "\n"
+if __name__ == '__main__':
+	main()
