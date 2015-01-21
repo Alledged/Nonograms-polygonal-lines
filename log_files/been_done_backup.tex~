@@ -133,5 +133,5 @@ Every face therefore has a variable telling if it is part of the originial drawi
 I now know which face is part of the original drawing, that is basically what is needed to construct a nonogram. So I need to combine extending the edges and knowing which face is part of the drawing to construct a simple nonogram.
 
 \subsection{Intersections branch}
-Extension of lines to the bounding box. 
+
 \end{document}
