@@ -6,8 +6,14 @@ import DCEL
 import Point
 import draw_dcel
 
-FILENAME = "input_files/separated_faces10.txt"
+FILENAME = "input_files/points_plane.txt"
 OUTPUT_FILE = "output.svg"
+
+
+#problem with some of the input files, those with negative number, as svg starts at 
+# (0,0) at the top left
+#MAYBE CONVERT TO COORDINATES TO SOMETHING THAT CAN BE SEEN IN THE BROWSER
+
 
 def main():
 	edges = parse_file(FILENAME)

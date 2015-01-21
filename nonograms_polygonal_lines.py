@@ -6,7 +6,7 @@ import cPickle
 
 
 
-FILENAME = "input_files/points_plane.txt"
+FILENAME = "input_files/separated_faces10.txt"
 
 
 def main():
