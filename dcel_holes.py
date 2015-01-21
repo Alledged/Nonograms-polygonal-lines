@@ -6,7 +6,7 @@ import DCEL
 import Point
 import draw_dcel
 
-FILENAME = "input_files/points_plane.txt"
+FILENAME = "input_files/fat_tangramcat.txt"
 OUTPUT_FILE = "output.svg"
 
 
