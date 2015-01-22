@@ -11,10 +11,12 @@ INPUTFILE = "input_files/fat_tangramcat.txt"
 
 edges = ie.parse_file(INPUTFILE)
 all_inter = ie.get_all_legit_intersections(edges)
-print len(all_inter)
+print all_inter
+
 
 
 # create a new drawing function, as the one in draw_dcel
 # draws polygons and i want to draw lines.
 def draw_extended_lines_svg(edges, outputfile):
+	# all_inter is a list of list of intersection points.
 	pass
