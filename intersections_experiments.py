@@ -97,7 +97,7 @@ def parse_file(file_name):
 	# return the list of tuples of Point.Point (list of edges)
 	return edges
 
-
+#THIS METHOD IS ONLY FOR A SINGLE EDGE!!
 def legit_intersections(edge):
 	"""Returns list of two legitimate intersection points between the
 	original edge (unexetended) and the bounding box. 
@@ -107,6 +107,7 @@ def legit_intersections(edge):
 	"""
 	# empty list to return
 	legit = []
+
 
 	# using the geomuil module, find the intersection point for each line with the 
 	# four edges of the bounding box. Some of those may be undefined if the edge and 
@@ -139,7 +140,14 @@ def legit_intersections(edge):
 
 	return legit
 
-
+def get_all_legit_intersections(edges):
+	"""calls the legit intersections for all edge in edges
+	and returns a list of list of intersection points"""
+	all_intersections = []	
+	for edge in edges:
+		legit = legit_intersections(edge)
+		all_intersections.append(legit)
+	return all_intersections
 
 def write_extended_point_to_file(edges):
 	"""Uses the same name as the input file with: _extented.txt at the end and 
