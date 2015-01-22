@@ -54,6 +54,11 @@ def part_of_drawing(face, value):
 		if(inner_face_edge != []):
 			part_of_drawing(inner_face_edge.getTwin().getFace(), value)
 		
-		
+def draw_structure(faces, outputfile):
+	part_of_drawing(faces[0], False)
+	draw_dcel.draw(faces, outputfile)	
+
+
+
 if __name__ == '__main__':
 	main()

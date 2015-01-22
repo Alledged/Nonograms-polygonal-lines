@@ -3,7 +3,7 @@ import dcel_creation
 import os
 import re
 import cPickle
-
+import dcel_holes
 
 
 FILENAME = "input_files/separated_faces10.txt"
@@ -76,12 +76,8 @@ def main():
 
 
 	# should have access to vertices, edges and faces
-	
+	dcel_holes.draw_structure(faces, "output_main.svg")
 
-	for face in faces:
-		if(face.get_ordered_vertices() != None):
-			for vertex in face.get_ordered_vertices():
-				print vertex
 
 
 if __name__ == '__main__':
