@@ -10,7 +10,7 @@ BOUNDING_X = [-200, 200, 200, -200, -200]
 BOUNDING_Y = [200, 200, -200, -200, 200]
 
 # does not work with page59.txt
-FILENAME = "input_files/points_plane.txt"
+FILENAME = "point_files/points_plane.txt"
 
 # unused method
 # def read_file(file_name):
