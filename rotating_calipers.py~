@@ -5,16 +5,29 @@
 
 # make sure that the code is compatible with
 # DCEL.Vertex instances
-import DCEL
+
+# ------------------------
+# this module fidns the DIAMETER not the width
+# ------------------------
+
 
 from __future__ import generators
 from math import sqrt
+from DCEL import Vertex
 
+def convert_Vertex_tuple(vertices):
+    """converts a list of DCEL.Vertex instance to a list of
+    tuples"""
+    list_tuple = []
+    for vertex in vertices:
+        list_tuple.append(vertex.getCoords())
+    return list_tuple
 
-
+# p, q, r are DCEL.Vertex instances
 def orientation(p,q,r):
     """docstring for orientation"""
     return (q[1]-p[1])*(r[0]-p[0]) - (q[0]-p[0])*(r[1]-p[1])
+    #return (q[1]-p[1])*(r[0]-p[0]) - (q[0]-p[0])*(r[1]-p[1])
 
 def hulls(points):
     """docstring for hulls"""
@@ -37,7 +50,7 @@ def rotating_calipers(points):
     j = len(L)-1
     while i < len(U) - 1 or j > 0:
         yield U[i],L[j]
-
+         
         if i == len(U) - 1:
             j -= 1
         elif j == 0:
@@ -50,6 +63,5 @@ def rotating_calipers(points):
 def diameter(points):
     """docstring for diameter, change from the original 
     method, I am using the square root distance"""
-    diam,pair = min([(sqrt((p[0]-q[0])**2 + (p[1]-q[1])**2),(p,q))
-        for p,q in rotating_calipers(points)])
+    diam,pair = max([(sqrt((p[0]-q[0])**2 + (p[1]-q[1])**2),(p,q)) for p,q in rotating_calipers(points)])
     return diam, pair
