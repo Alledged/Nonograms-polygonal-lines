@@ -1,6 +1,6 @@
 # this is the main script
 import dcel_creation
-import rotating_calipers
+import min_bounding_box as mbb 
 import os
 import re
 import cPickle
@@ -75,11 +75,14 @@ def main():
         f_e.close()
         f_f.close()
 
-
+    
 
     # should have access to vertices, edges and faces
     #dcel_holes.draw_structure(faces, "output_main.svg")
-    for face in faces:
-        print face.getOuterBoundary()
+    
+    # method to calculate the width of a face from module min_bounding_box
+    for i in range(1,len(faces)):
+        print mbb.calculate_width(faces[i])
+
 if __name__ == '__main__':
     main()
