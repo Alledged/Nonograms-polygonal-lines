@@ -1,6 +1,5 @@
 # this is the main script
 import dcel_creation
-import min_bounding_box as mbb 
 import os
 import re
 import cPickle
@@ -82,7 +81,9 @@ def main():
     
     # method to calculate the width of a face from module min_bounding_box
     for i in range(1,len(faces)):
-        print mbb.calculate_width(faces[i])
+        #print mbb.calculate_width(faces[i])
+        print "width = {0}".format(faces[i].get_width())
+        print "diameter = {0}".format(faces[i].get_diameter())
 
 if __name__ == '__main__':
     main()

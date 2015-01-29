@@ -1,7 +1,11 @@
 from Point import Point
+from shapely.geometry import Polygon
+
 import Rational
 import geomutil
 import matplotlib.pyplot as plt
+import math
+import shapely.affinity
 
 # mine!
 # list of 2D tuples of DCEL.Vertex points
@@ -208,6 +212,9 @@ class Face:
         self._outer = None
         self._inner = set()
         self._isolated = set()
+        # set the width and diameter to a negative numbers as a start
+        self._width = -1
+        self._diameter = -1
 
     def __hash__(self):
         """Allow face to serve as key of set or dictionary."""
@@ -220,6 +227,14 @@ class Face:
     #def setData(self, auxData):
     #    """Sets auxillary data."""
     #    self._data = auxData
+
+    def get_width(self):
+        """returns the width of the face"""
+        return self.calculate_width()
+    
+    def get_diameter(self):
+        """returns the diameter of the face"""
+        return self.calculate_diameter()
 
     def get_is_part_of_drawing(self):
         return self._part_of_drawing
@@ -306,6 +321,63 @@ class Face:
         # using a rational number from the Rational class (1/2)
         total = Rational.Rational(1, 2) * (part_p - part_m)
         return total
+
+    # my method
+    def calculate_width(self):
+        """Calculates the width of a DCEL.face object and returns it"""
+        edges = self.getOuterBoundary()
+        vertices = [] # list of tuples of coordinates 
+        for edge in edges:
+            vertices.append(edge.getOrigin().getCoords()) 
+        # construct polygon 
+        polygon = Polygon(vertices) 
+        width = 1000
+        for i in range(len(vertices)):
+            if i == len(vertices) - 1:
+                orientation = math.atan2(vertices[i][1]-vertices[0][1],vertices[i][0]-vertices[0][0])
+            else:
+                orientation = math.atan2(vertices[i+1][1]-vertices[i][1], vertices[i+1][0]-vertices[i][0])
+    
+            poly_new = shapely.affinity.rotate(polygon, -1.0*orientation, polygon.centroid, use_radians=True)
+            minx, miny, maxx, maxy = poly_new.bounds
+            x_l = maxx-minx
+            y_l = maxy-miny
+            if x_l < y_l and x_l < width:
+                width = x_l
+            elif y_l < x_l and y_l < width:
+                width = y_l
+            elif y_l == x_l and y_l < width:
+                width = y_l
+        return width
+
+    # my method
+    def calculate_diameter(self):
+        """Calculates the diameter of a DCEL.face object and returns it"""
+        edges = self.getOuterBoundary()
+        vertices = [] # list of tuples of coordinates 
+        for edge in edges:
+            vertices.append(edge.getOrigin().getCoords()) 
+        # construct polygon 
+        polygon = Polygon(vertices) 
+        diameter = -1
+        for i in range(len(vertices)):
+            if i == len(vertices) - 1:
+                orientation = math.atan2(vertices[i][1]-vertices[0][1],vertices[i][0]-vertices[0][0])
+            else:
+                orientation = math.atan2(vertices[i+1][1]-vertices[i][1], vertices[i+1][0]-vertices[i][0])
+    
+            poly_new = shapely.affinity.rotate(polygon, -1.0*orientation, polygon.centroid, use_radians=True)
+            minx, miny, maxx, maxy = poly_new.bounds
+            x_l = maxx-minx
+            y_l = maxy-miny
+            if x_l > y_l and x_l > diameter:
+                diameter = x_l
+            elif y_l > x_l and y_l > diameter:
+                diameter = y_l
+            elif y_l == x_l and y_l > diameter:
+                diameter = y_l
+        return diameter 
+
 
     # my method
     def get_ordered_vertices(self):
